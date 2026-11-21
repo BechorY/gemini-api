@@ -9,6 +9,15 @@ import sys
 from gemini_tool.client import MissingCredentialsError, ask, list_models
 
 EXIT_OK, EXIT_API_ERROR, EXIT_NO_CREDS = 0, 1, 2
+OVERALL_TIMEOUT_SEC = 120
+
+
+def run(coro):
+    """Run a coroutine on a Selector loop (curl_cffi stalls on Windows' Proactor loop)."""
+    async def guarded():
+        return await asyncio.wait_for(coro, OVERALL_TIMEOUT_SEC)
+
+    return asyncio.run(guarded(), loop_factory=asyncio.SelectorEventLoop)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -26,18 +35,21 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         if args.list_models:
-            print("\n".join(asyncio.run(list_models())))
+            print("\n".join(run(list_models())))
             return EXIT_OK
         prompt = args.prompt if args.prompt is not None else sys.stdin.read()
         if not prompt.strip():
             print("error: empty prompt", file=sys.stderr)
             return EXIT_API_ERROR
-        text = asyncio.run(
+        text = run(
             ask(prompt, files=args.file, model=args.model, temporary=not args.save_history)
         )
     except MissingCredentialsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return EXIT_NO_CREDS
+    except TimeoutError:
+        print(f"error: no response within {OVERALL_TIMEOUT_SEC}s", file=sys.stderr)
+        return EXIT_API_ERROR
     except Exception as exc:  # network/auth/API failures
         print(f"error: {type(exc).__name__}: {exc}", file=sys.stderr)
         return EXIT_API_ERROR
