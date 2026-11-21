@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "CLI + helper wrapper around HanaokaYuzu/Gemini-API (gemini_webapi)"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["gemini_webapi>=2.1,<3"]
+dependencies = ["gemini_webapi>=2.1,<3", "google-genai>=1.0"]
 
 [project.optional-dependencies]
 browser = ["gemini_webapi[browser]>=2.1,<3"]

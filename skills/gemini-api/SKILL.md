@@ -10,7 +10,8 @@ cookie-authenticated client for gemini.google.com.
 
 ## Prerequisites
 - `gemini-cli` on PATH (installed by `scripts/install-skill.sh` in the gemini-api repo).
-- Env vars `GEMINI_SECURE_1PSID` (required) and `GEMINI_SECURE_1PSIDTS` (optional).
+- Preferred: env var `GEMINI_API_KEY` (official Gemini API, key from https://aistudio.google.com/apikey). Optional `GEMINI_MODEL`.
+- Fallback: cookie backend (HanaokaYuzu/Gemini-API) with `GEMINI_SECURE_1PSID` (required) and `GEMINI_SECURE_1PSIDTS` (optional). The CLI uses the API key if set, else cookies; force with `--backend official|cookies`.
 - Network access to gemini.google.com.
 If `gemini-cli` exits with code 2, credentials are missing: tell the user; never ask them to paste cookies in chat.
 
