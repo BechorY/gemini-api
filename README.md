@@ -13,5 +13,8 @@ Wrapper + Claude Code skill for [HanaokaYuzu/Gemini-API](https://github.com/Hana
 ## Cloud sessions
 Add the two variables in the Claude environment settings, allow host `gemini.google.com`, and use a setup script that runs `scripts/install-skill.sh` after cloning this repo.
 
+## Setup on another PC
+Step-by-step commands: [docs/SETUP.md](docs/SETUP.md)
+
 ## Tests
 `pip install -e .[dev] && pytest -q`
