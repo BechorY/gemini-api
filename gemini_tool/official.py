@@ -6,7 +6,7 @@ from pathlib import Path
 
 ENV_API_KEY = "GEMINI_API_KEY"
 ENV_MODEL = "GEMINI_MODEL"
-DEFAULT_MODEL = "gemini-2.5-flash"
+DEFAULT_MODEL = "gemini-3.8-flash"
 
 
 class MissingApiKeyError(RuntimeError):
