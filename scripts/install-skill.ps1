@@ -15,7 +15,6 @@ Copy-Item -Recurse (Join-Path $Repo "skills\gemini-api") $Dest
 $scripts = & $py -c "import sysconfig;print(sysconfig.get_path('scripts','nt_user'))"
 Write-Host "Skill installed: $Dest\SKILL.md"
 Write-Host "Add to PATH if gemini-cli is not found: $scripts"
-Write-Host "Then set cookies (persistent):"
-Write-Host '  setx GEMINI_SECURE_1PSID "<value>"'
-Write-Host '  setx GEMINI_SECURE_1PSIDTS "<value>"'
+Write-Host "Credentials: set GEMINI_API_KEY (key from https://aistudio.google.com/apikey):"
+Write-Host '  setx GEMINI_API_KEY "<your key>"'
 Write-Host "Open a NEW terminal and run: gemini-cli 'Reply with OK'"

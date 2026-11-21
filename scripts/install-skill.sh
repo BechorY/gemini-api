@@ -13,4 +13,4 @@ cp -r "$REPO/skills/gemini-api" "$SKILLS_DIR/gemini-api"
 
 echo "Skill installed: $SKILLS_DIR/gemini-api/SKILL.md"
 echo "Verify: gemini-cli --help  (ensure ~/.local/bin is on PATH)"
-echo "Then set GEMINI_SECURE_1PSID / GEMINI_SECURE_1PSIDTS and run: gemini-cli 'Reply with OK'"
+echo "Then export GEMINI_API_KEY (https://aistudio.google.com/apikey) and run: gemini-cli 'Reply with OK'"
