@@ -50,3 +50,9 @@ def test_explicit_model_has_no_fallback(monkeypatch):
     _install(monkeypatch, {})
     assert official.candidate_models("x") == ["x"]
     assert official.candidate_models(None)[0] == official.DEFAULT_MODEL
+
+
+def test_falls_back_on_504(monkeypatch):
+    models = _install(monkeypatch, {"gemini-3.8-flash": FakeError(504), "gemini-3.5-flash": "OK"})
+    assert asyncio.run(official.ask("hi")) == "OK"
+    assert models.calls[-1] == "gemini-3.5-flash"
