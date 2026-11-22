@@ -76,8 +76,8 @@ gemini-cli "Reply with OK"
 ## Useful commands
 | Command | Purpose |
 |---|---|
-| `gemini-cli "prompt"` | Ask Gemini (default model `gemini-3.8-flash`, auto-fallback) |
-| `gemini-cli --model gemini-3.5-flash-lite "prompt"` | Use one specific model, no fallback |
+| `gemini-cli "prompt"` | Ask Gemini (default model `gemini-3.5-flash-lite`, auto-fallback) |
+| `gemini-cli --model gemini-3.8-flash "prompt"` | Use one specific model, no fallback |
 | `gemini-cli --file .\doc.pdf "Summarize this"` | Attach a file (repeat `--file` for more) |
 | `gemini-cli --json "prompt"` | Output as JSON `{"text": ...}` |
 | `gemini-cli --list-models` | List models your key can use |

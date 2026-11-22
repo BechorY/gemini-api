@@ -8,9 +8,9 @@ from pathlib import Path
 
 ENV_API_KEY = "GEMINI_API_KEY"
 ENV_MODEL = "GEMINI_MODEL"
-DEFAULT_MODEL = "gemini-3.8-flash"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
 ENV_FALLBACKS = "GEMINI_FALLBACK_MODELS"
-DEFAULT_FALLBACKS = "gemini-3.5-flash,gemini-3.5-flash-lite"
+DEFAULT_FALLBACKS = "gemini-3.5-flash,gemini-3.8-flash"
 RETRYABLE_STATUS_CODES = {429, 500, 503, 504}
 RETRIES_PER_MODEL = 1
 REQUEST_TIMEOUT_MS = 30_000

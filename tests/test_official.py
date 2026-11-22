@@ -34,16 +34,16 @@ def _install(monkeypatch, outcomes):
 
 
 def test_falls_back_on_503(monkeypatch):
-    models = _install(monkeypatch, {"gemini-3.8-flash": FakeError(503), "gemini-3.5-flash": "OK"})
+    models = _install(monkeypatch, {official.DEFAULT_MODEL: FakeError(503), "gemini-3.5-flash": "OK"})
     assert asyncio.run(official.ask("hi")) == "OK"
-    assert models.calls == ["gemini-3.8-flash"] * (official.RETRIES_PER_MODEL + 1) + ["gemini-3.5-flash"]
+    assert models.calls == [official.DEFAULT_MODEL] * (official.RETRIES_PER_MODEL + 1) + ["gemini-3.5-flash"]
 
 
 def test_non_retryable_raises_immediately(monkeypatch):
-    models = _install(monkeypatch, {"gemini-3.8-flash": FakeError(400)})
+    models = _install(monkeypatch, {official.DEFAULT_MODEL: FakeError(400)})
     with pytest.raises(FakeError):
         asyncio.run(official.ask("hi"))
-    assert models.calls == ["gemini-3.8-flash"]
+    assert models.calls == [official.DEFAULT_MODEL]
 
 
 def test_explicit_model_has_no_fallback(monkeypatch):
@@ -53,6 +53,6 @@ def test_explicit_model_has_no_fallback(monkeypatch):
 
 
 def test_falls_back_on_504(monkeypatch):
-    models = _install(monkeypatch, {"gemini-3.8-flash": FakeError(504), "gemini-3.5-flash": "OK"})
+    models = _install(monkeypatch, {official.DEFAULT_MODEL: FakeError(504), "gemini-3.5-flash": "OK"})
     assert asyncio.run(official.ask("hi")) == "OK"
     assert models.calls[-1] == "gemini-3.5-flash"
