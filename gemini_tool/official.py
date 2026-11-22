@@ -12,7 +12,8 @@ DEFAULT_MODEL = "gemini-3.8-flash"
 ENV_FALLBACKS = "GEMINI_FALLBACK_MODELS"
 DEFAULT_FALLBACKS = "gemini-3.5-flash,gemini-3.5-flash-lite"
 RETRYABLE_STATUS_CODES = {429, 500, 503}
-RETRIES_PER_MODEL = 2
+RETRIES_PER_MODEL = 1
+REQUEST_TIMEOUT_MS = 30_000
 BACKOFF_BASE_SEC = 2
 
 
@@ -26,13 +27,19 @@ def has_api_key() -> bool:
 
 def _client():
     from google import genai  # lazy import
+    from google.genai import types
 
     key = os.environ.get(ENV_API_KEY, "").strip()
     if not key:
         raise MissingApiKeyError(
             f"{ENV_API_KEY} is not set. Create a key at https://aistudio.google.com/apikey"
         )
-    return genai.Client(api_key=key)
+    # attempts=1 turns off the SDK's own retries; ask() handles retry and fallback itself,
+    # otherwise the two layers multiply and one busy model can take minutes.
+    options = types.HttpOptions(
+        timeout=REQUEST_TIMEOUT_MS, retry_options=types.HttpRetryOptions(attempts=1)
+    )
+    return genai.Client(api_key=key, http_options=options)
 
 
 async def ask(prompt: str, files: list[str | Path] | None = None, model: str | None = None) -> str:

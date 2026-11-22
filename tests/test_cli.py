@@ -7,6 +7,7 @@ from gemini_tool import cli, client, official
 
 def test_missing_credentials_exit_code(monkeypatch, capsys):
     monkeypatch.delenv(client.ENV_PSID, raising=False)
+    monkeypatch.delenv(official.ENV_API_KEY, raising=False)
     assert cli.main(["hello"]) == cli.EXIT_NO_CREDS
     assert client.ENV_PSID in capsys.readouterr().err
 
