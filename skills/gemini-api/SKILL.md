@@ -1,6 +1,6 @@
 ---
 name: gemini-api
-description: Ask Google Gemini (via the HanaokaYuzu/Gemini-API `gemini_webapi` library) for a second opinion, to analyze images/files, or to generate content. Use when the user says "ask Gemini", "use Gemini", "second opinion from Gemini", or wants to write code that calls Gemini through gemini_webapi.
+description: Ask Google Gemini (via the HanaokaYuzu/Gemini-API `gemini_webapi` library) for a second opinion, to analyze images/files, or to generate content. Use when the user says "ask Gemini", "use Gemini", "second opinion from Gemini", "gemini-cli", or wants to write code that calls Gemini through gemini_webapi. Note: `gemini-cli` here is this skill's own command (python package gemini_tool), not Google's npm @google/gemini-cli; do not install the npm tool.
 ---
 
 # Gemini-API skill
